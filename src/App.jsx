@@ -9,7 +9,8 @@ import Cart from './Components/Cart';
 import { useState } from 'react';
 
 function App() {
-  const data = JSON.parse(localStorage.getItem("cartData")) || {};
+  const data = JSON.parse(localStorage.getItem("cartDat")) || {};
+  console.log('type of data', typeof data)
   const [ cart, setCart ] = useState(data);
 
   const handleAddtoKart = (itemId, itemCount) => {
