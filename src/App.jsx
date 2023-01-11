@@ -11,7 +11,7 @@ import { useState } from 'react';
 function App() {
   const data = JSON.parse(localStorage.getItem("cartDat")) || {};
   console.log('type of data', typeof data)
-  const [ cart, setCart ] = useState({});
+  const [ cart, setCart ] = useState(data);
 
   const handleAddtoKart = (itemId, itemCount) => {
     let newItems = +(itemCount);
