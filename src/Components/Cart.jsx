@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CartHeading from './CartHeading';
 import CartItem from './CartItem';
 import Coupon from './Coupon';
 import Totals from './Totals';
+import { getProduct} from './Api'
+import Loading from './Loading';
 
 const cartItems = [
     {
@@ -21,13 +23,35 @@ const cartItems = [
     },
 ]
 
-const total = cartItems.reduce((output, current) => {
-    return output + current.price*current.quantity
-}, 0);
-console.log('total',  total)
 
-const Cart = () => {
-    console.log('cart run');
+
+const Cart = ({cart}) => {
+    const [ cartArr, setCartArr ] = useState([]);
+    const [ loading, setLoading ] = useState(true);
+    useEffect(() => {
+        const arrofpromises = Object.keys(cart).map(item => {
+            return getProduct((+item))
+          }) 
+        Promise.all(arrofpromises).then((value) => {
+            const arr = Object.keys(value).map(item => {
+                return value[item].data;
+            })
+            setCartArr(arr);
+            setLoading(false);
+        })
+    }, [])
+    
+    const total = cartArr.reduce((output, current) => {
+        return output + current.price*cart[current.id];
+    }, 0);
+    // console.log('total',  total)
+   if(loading) {
+    return (
+        <Loading />
+    )
+   }
+
+
   return (
     <div className=' bg-white m-12 py-20'>
         <div>
@@ -37,9 +61,9 @@ const Cart = () => {
 
         </div>
         {
-            cartItems.map((item) => {
+            cartArr.map((item) => {
                 return (
-                    <CartItem imgURL={item.imgURL} title={item.title} price={item.price} quantity={item.quantity} />
+                    <CartItem imgURL={item.thumbnail} title={item.title} price={item.price} quantity={cart[item.id]} />
                 )
             })
         }
