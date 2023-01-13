@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import React from 'react'
 import * as Yup from 'yup';
+import Input from './Input';
 
 const LoginPage = () => {
 
@@ -21,7 +22,8 @@ const LoginPage = () => {
             password: ''
         },
         onSubmit: callLoginApi,
-        validationSchema: schema
+        validationSchema: schema,
+        validateOnMount: true
     }) 
 
 
@@ -32,40 +34,33 @@ const LoginPage = () => {
             onSubmit={handleSubmit} 
             action="" className='flex flex-col bg-white border p-8  justify-center items-center'>
             <h1 className='text-2xl'>Login page to CodeYogi</h1>
-            <div className='items-center justify-center '>
-                <label htmlFor="MyEmail" className='sr-only' >Email address</label>
-                <input 
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                name='email'
-                type="email" 
-                placeholder='Email address '
-                id='MyEmail'
-                autoComplete
-                required
-                className='p-2 border-2 rounded-md placeholder-gray-300'
-                />
-                {touched.email && errors.email && (
-                    <h3 className='text-primary-dark '>{errors.email}!</h3>
-                )}
-            </div>
-            <div>
-                <label htmlFor="MyPassword"></label>
-                <input 
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder='Password'
-                name='password'
-                className='p-2 border-2 rounded-md placeholder-gray-300'
-                id='MyPassword'
-                type="password" />
-                {touched.password && errors.password && (
-                    <h3 className='text-primary-dark '>{errors.password}!</h3>
-                )}
+            <Input
+            id="MyEmail"
+            value={values.email}
+            name="email"
+            placeholder='Email address'
+            type="email"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            touched={touched.email}
+            error={errors.email}
+            required={true}
+            label="Email address"
+            />
 
-            </div>
+            <Input
+            id="MyPassword"
+            value={values.password}
+            name="password"
+            placeholder='Password'
+            type="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            touched={touched.password}
+            error={errors.password}
+            required={true}
+            label="Password"
+            />
             <button
             onClick={resetForm} 
             className='bg-primary-default py-1 px-3 rounded-md uppercase text-white mt-4'>Reset Form</button>
