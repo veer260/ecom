@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 const CartHeading = () => {
+  console.log('cartHeading running');
   return (
     <div className='flex bg-gray-100 py-4 px-8 font-semibold border-[1px] border-gray-200 w-[80%] mx-auto'>
         <h3 className='basis-2/5 text-center   '>Product</h3>
@@ -11,4 +12,4 @@ const CartHeading = () => {
   )
 }
 
-export default CartHeading;
+export default memo(CartHeading);

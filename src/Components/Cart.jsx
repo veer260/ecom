@@ -6,24 +6,6 @@ import Totals from './Totals';
 import { getProduct} from './Api'
 import Loading from './Loading';
 
-const cartItems = [
-    {
-        price: 15.00,
-        quantity: 2,
-        title: "Black Printed Coffee Mug",
-        imgURL: "https://trycasuals.com/wp-content/uploads/2018/06/mug-coffee-5.jpg",
-
-    },
-    {
-        price: 34.00,
-        quantity: 4,
-        title: "Printed Dark Blue Shirt",
-        imgURL: "https://trycasuals.com/wp-content/uploads/2018/06/tshirt4-4.jpg",
-
-    },
-]
-
-
 
 const Cart = ({cart}) => {
     const [ cartArr, setCartArr ] = useState([]);
@@ -44,7 +26,8 @@ const Cart = ({cart}) => {
     const total = cartArr.reduce((output, current) => {
         return output + current.price*cart[current.id];
     }, 0);
-    // console.log('total',  total)
+
+    
    if(loading) {
     return (
         <Loading />

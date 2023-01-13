@@ -87,7 +87,7 @@ const ProductDetails = ({ onAddtoKart }) => {
           <p>In stock, only <span className="font-display font-black"> {product.stock} </span>left </p>
           <p>{product.rating}</p>
 
-          <div className="absolute bottom-12 right-0 w-[80%] flex justify-around pt-12"> 
+          <div className="absolute bottom-12 right-0 w-[80%] flex justify-around items-center pt-12"> 
             <div>
               { sku > 1 && <Link className="w-12 hover:shadow-md h-12 hover:bg-white rounded-full flex justify-center items-center" to={'/ProductDetails/'+ (sku - 1)} > 
               <HiArrowLeft className="text-black text-2xl"></HiArrowLeft>
@@ -97,6 +97,7 @@ const ProductDetails = ({ onAddtoKart }) => {
               <Link className="  w-12  hover:shadow-md h-12 hover:bg-white rounded-full flex justify-center items-center " to={'/ProductDetails/'+ (sku + 1)} >
                 <HiArrowRight className="text-black text-2xl"></HiArrowRight> 
                 </Link>
+            <Link className="font-medium hover:bg-gray-700 hover:text-white p-2 align-center  " to={'/'} >Back to home</Link>
         </div>
           </div>
       </div>
