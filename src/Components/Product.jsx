@@ -15,10 +15,8 @@ const Product = () => {
     useState(() => {
         const data = getProductList();
         data.then((response) => {
-            // console.log('promise func');
-            setProductList([...response.data.products]);
-    })
-
+            setProductList(response);
+        })
     },[])
 
     let arr = productList.filter((item) => {

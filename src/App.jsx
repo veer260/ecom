@@ -5,7 +5,7 @@ import { Link, Route, Routes, useParams } from 'react-router-dom';
 import Home from './Components/home';
 import ProductDetails from './Components/ProductDetails';
 import Navbar from './Components/Navbar';
-import Cart from './Components/Cart';
+import CartPage from './Components/CartPage';
 import { useState } from 'react';
 import { getProduct } from './Components/Api'
 import LoginPage from './Components/LoginPage';
@@ -20,6 +20,11 @@ function App() {
     let oldItems =  cart[itemId] || 0;
     const newCart = { ... cart};
     newCart[itemId] = oldItems + newItems;
+    setLocalCart(newCart);
+    
+  }
+
+  const setLocalCart = (newCart) => {
     setCart(newCart);
     localStorage.setItem("cartData", JSON.stringify(newCart));
   }
@@ -32,9 +37,9 @@ function App() {
     <div className='bg-gray-50 flex flex-col w-full h-screen overflow-y-scroll'>
     <Navbar productCount={totalItems} />
     <Routes >
-       <Route path='/' element={<LoginPage />} ></Route>
+       <Route path='/' element={<Home />} ></Route>
        <Route path='/ProductDetails/:sku/' element={ <ProductDetails onAddtoKart={handleAddtoKart} /> } ></Route>
-       <Route path='/cart/' element= {<Cart cart={cart} />} ></Route>
+       <Route path='/cart/' element= {<CartPage cart={cart} updateCart={setCart} setLocalCart={setLocalCart} />} ></Route>
    </Routes>
   </div>
   )  

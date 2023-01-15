@@ -1,12 +1,15 @@
+
 import { Formik, Form } from 'formik';
 import React from 'react'
 import * as Yup from 'yup';
-import Input from './Input';
+// import FormikInput from './FormikInput';
+import Input, { FormikInput} from './Input';
 
 const LoginPage = () => {
+    console.log('login ran')
     function callLoginApi(values) {
         console.log('email', touched.email);
-        console.log('password', touched.password)
+        // console.log('password', touched.password)
         console.log('sending data', values.email, values.password); 
     }
 
@@ -22,24 +25,28 @@ const LoginPage = () => {
 
   return (
     <div className='flex flex-col items-center justify-center h-screen font-semibold space-y-4'>
+        <Input
+        label="Search" 
+        placeholder="Search"/>
         <Formik initialValues={initialValues} onSubmit={callLoginApi} validationSchema={schema} validateOnMount={true} >
+
         <Form 
             action="" className='flex flex-col bg-white border p-8  justify-center items-center'>
             <h1 className='text-2xl'>Login page to CodeYogi</h1>
-            <Input
+            <FormikInput
             id="MyEmail"
             name="email"
-            placeholder='Email address'
+            placeholder='Email addresssss'
             type="email"
             required={true}
             label="Email address"
             className='border-primary-default b-2'
             />
 
-            <Input
+            <FormikInput
             id="MyPassword"
             name="password"
-            placeholder='Password'
+            placeholder='Passwordss'
             type="password"
             required={true}
             label="Password"

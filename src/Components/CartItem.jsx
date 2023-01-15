@@ -2,11 +2,17 @@ import React from 'react'
 
 import { RxCrossCircled } from "react-icons/rx";
 
-const CartItem = ({price, quantity, imgURL, title}) => {
+const CartItem = ({id, removeItem, price, quantity, imgURL, title}) => {
+  const handleRemove = (event) => {
+    removeItem(event, id  )
+  }
   return (
     <div className='flex items-center py-2 bg-white border-b font-semibold border-r border-l w-[80%] mx-auto'>
         <div className='flex basis-2/5  items-center'>
+            <button className='' onClick={handleRemove}>
             <RxCrossCircled className='basis-1/3 text-2xl text-gray-400'></RxCrossCircled>
+            </button>
+            
             <div className='basis-1/3'>
             <img className='w-[50%] ' src={imgURL} alt="" />
             </div>
