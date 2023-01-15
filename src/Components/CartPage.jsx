@@ -5,6 +5,7 @@ import Coupon from './Coupon';
 import Totals from './Totals';
 import { getProduct} from './Api'
 import Loading from './Loading';
+import CartTotal from './CartTotal';
 
 
 const CartPage = ({cart, updateCart, setLocalCart}) => {
@@ -32,6 +33,9 @@ const CartPage = ({cart, updateCart, setLocalCart}) => {
       setLocalCart(newCart);
    }
 
+   // const handleChange = (event, id) => {
+   // }
+
    if(loading) {
       return (
          <Loading />
@@ -46,11 +50,12 @@ const CartPage = ({cart, updateCart, setLocalCart}) => {
          {
             products.map(item => {
                return (
-                  <CartItem id={item.id} removeItem={handleRemove} price={item.price} quantity={cart[item.id]} imgURL={item.thumbnail} title={item.title} />
+                  <CartItem setLocalCart={setLocalCart} cart={cart} updateCart={updateCart} id={item.id} removeItem={handleRemove} price={item.price} quantity={cart[item.id]} imgURL={item.thumbnail} title={item.title} />
                )
             })
          }
          <Coupon />
+         <CartTotal />
       </div>
         
     </div>
