@@ -7,6 +7,7 @@ import {BiUser} from 'react-icons/bi';
 import {RiLockPasswordLine} from 'react-icons/ri'
 import axios from 'axios';
 import { Navigate } from 'react-router';
+import withUser from './withUser';
 
 
 const callLoginApi = (values, bag) => {
@@ -89,4 +90,4 @@ const Login = ({values, touched, errors, user, handleSubmit, handleBlur, handleC
 const myHOC = withFormik({ validationSchema: schema, handleSubmit: callLoginApi, initialValues: initialValues});
 const EasyLogin = myHOC(Login);
 
-export default EasyLogin;
+export default withUser(EasyLogin);
