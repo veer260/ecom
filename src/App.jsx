@@ -24,14 +24,8 @@ function App() {
   const data = JSON.parse(localStorage.getItem("cartData")) || {};
   const [ cart, setCart ] = useState(data);
   const [user, setUser] = useState();
-  const [alert, setAlert] = useState({
-    type: 'error',
-    message: "Username or password not recognised!"
-  })
+  const [alert, setAlert] = useState(undefined);
   const [loading, setLoading] = useState(true);
-  console.log('user:',user);
-  // console.log('cart:', cart);
-
   const token = localStorage.getItem("token");
   console.log('token:',token);
   useEffect(() => {
@@ -53,6 +47,10 @@ function App() {
       setLoading(false)
     }
     },[])
+
+  const removeAlert = () => {
+    setAlert(undefined);
+  }
 
   const handleAddtoKart = (itemId, itemCount) => {
     let newItems = +(itemCount);
@@ -81,11 +79,11 @@ function App() {
 
   return(
     <userContext.Provider value={{user, setUser}}>
-    <alertContext.Provider value={{alert, setAlert}}>
+    <alertContext.Provider value={{alert, setAlert, removeAlert}}>
       <div className='bg-gray-50 space-y-2 flex flex-col w-full h-screen overflow-y-scroll'>
         <Navbar productCount={totalItems} />
         <Alert type='error' message='Username or password is wrong!' />
-        <Alert type='success' message='User successfully registered' />
+        {/* <Alert type='success' message='User successfully registered' /> */}
         <Routes >
           <Route path='/login' element={<AuthRoute><EasyLogin /></AuthRoute>} ></Route>
           <Route path='/ProductDetails/:sku/' element={ <ProductDetails onAddtoKart={handleAddtoKart} /> } ></Route>

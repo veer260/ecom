@@ -3,8 +3,13 @@ import {AiOutlineCheckSquare} from 'react-icons/ai';
 import {BiErrorCircle} from 'react-icons/bi';
 import withError from './withError';
  
-const Alert = ({alert}) => {
+const Alert = ({alert, setAlert, removeAlert}) => {
     console.log('alert',alert)
+    if(!alert) {
+        return (
+            <></>
+        )
+    }
     const {type, message} = alert;
     let color;
     let Icon;
@@ -20,6 +25,10 @@ const Alert = ({alert}) => {
         heading = 'error';
         border = ' border-primary-dark';
     }
+
+    const handleDismiss = () => {
+        setAlert(undefined);
+    }
   return (
     <div className={'w-[80%] mx-auto rounded-md font-formal h-12  bg-white  flex items-center border-2 pr-4' + border}>
         <div className={'w-[5%] h-full flex items-center justify-center ' + color  }>
@@ -29,7 +38,9 @@ const Alert = ({alert}) => {
             {message} 
         </div>
         <div>
-            <button className='border-b-2 text-[#850000] shadow-sm'>Dismiss</button>
+            <button 
+            onClick={removeAlert}
+            className='border-b-2 text-[#850000] shadow-sm'>Dismiss</button>
         </div>
     </div>
   )

@@ -8,9 +8,11 @@ import {RiLockPasswordLine} from 'react-icons/ri'
 import axios from 'axios';
 import { Navigate } from 'react-router';
 import withUser from './withUser';
+import withError from './withError';
 
 
-const callLoginApi = (values, bag) => {
+const callLoginApi = (values, bag, setAlert) => {
+    console.log('setAlert:',setAlert);
     console.log('callloginApi called')   
     console.log('values:', values);
     axios.post('https://myeasykart.codeyogi.io/login', {
@@ -21,7 +23,10 @@ const callLoginApi = (values, bag) => {
         localStorage.setItem('token', token);
         bag.props.setUser(user);
     }).catch(() =>{
-        console.log('Invalid credentials');
+        bag.props.setAlert({
+            type: 'error',
+            message: 'Invalid credentials'
+    })
     })
 }
 const schema = Yup.object().shape({
@@ -81,7 +86,6 @@ const Login = ({values, touched, errors, user, handleSubmit, handleBlur, handleC
                 borderClass=''
                 />
             </div>
-
             <button type='submit'  className='bg-white w-full font-semibold text-primary-default p-2 '>Login</button>
             </form>
     </div>
@@ -90,4 +94,4 @@ const Login = ({values, touched, errors, user, handleSubmit, handleBlur, handleC
 const myHOC = withFormik({ validationSchema: schema, handleSubmit: callLoginApi, initialValues: initialValues});
 const EasyLogin = myHOC(Login);
 
-export default withUser(EasyLogin);
+export default withError(withUser(EasyLogin)) ;

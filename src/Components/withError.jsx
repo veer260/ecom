@@ -4,9 +4,9 @@ import { alertContext } from '../App'
 const withError = (IncomingComponent) => {
     
   return function OutgoingComponent(props) {
-    const {alert, setAlert} = useContext(alertContext);
+    const {alert, setAlert, removeAlert} = useContext(alertContext);
     return (
-        <IncomingComponent {...props} alert={alert} setAlert={setAlert} />
+        <IncomingComponent {...props} alert={alert} setAlert={setAlert} removeAlert={removeAlert} />
     )
   }
 }
