@@ -6,13 +6,17 @@ import Home from './Components/home';
 import ProductDetails from './Components/ProductDetails';
 import Navbar from './Components/Navbar';
 import CartPage from './Components/CartPage';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { getProduct } from './Components/Api'
 import LoginPage from './Components/LoginPage';
 import EasyLogin from './Components/Login';
 import Dashboard from './Components/Dashboard';
 import axios from 'axios';
 import Loading from './Components/Loading';
+import UserRoute from './Components/UserRoute';
+import AuthRoute from './Components/AuthRoute';
+
+export const userContext = createContext();
 
 function App() {
   const data = JSON.parse(localStorage.getItem("cartData")) || {};
@@ -70,15 +74,19 @@ function App() {
   }
 
   return(
-    <div className='bg-gray-50 flex flex-col w-full h-screen overflow-y-scroll'>
-    <Navbar productCount={totalItems} />
-    <Routes >
-       <Route path='/login' element={<EasyLogin user={user} setUser={setUser} />} ></Route>
-       <Route path='/ProductDetails/:sku/' element={ <ProductDetails onAddtoKart={handleAddtoKart} /> } ></Route>
-       <Route path='/cart/' element= {<CartPage cart={cart} updateCart={setCart} setLocalStorage={setLocalStorage} />} ></Route>
-       <Route index element={<Dashboard user={user} />} />
-   </Routes>
-  </div>
+    <userContext.Provider value={{user, setUser}}>
+      <div className='bg-gray-50 flex flex-col w-full h-screen overflow-y-scroll'>
+      <Navbar productCount={totalItems} />
+      <Routes >
+        <Route path='/login' element={<AuthRoute><EasyLogin user={user} /></AuthRoute>} ></Route>
+        <Route path='/ProductDetails/:sku/' element={ <ProductDetails onAddtoKart={handleAddtoKart} /> } ></Route>
+        <Route path='/cart/' element= {<CartPage cart={cart} updateCart={setCart} setLocalStorage={setLocalStorage} />} ></Route>
+        <Route index element={<UserRoute><Dashboard /></UserRoute>} />
+      </Routes>
+    </div>
+
+    </userContext.Provider>
+    
   )  
 }
 

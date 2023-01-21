@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Yup from 'yup';
 import {Formik, Form, withFormik} from 'formik';
-import { TestFormikInput } from './TestInput';
+// import { TestFormikInput } from './TestInput';
 import TestInput from './TestInput';
 import {BiUser} from 'react-icons/bi';
 import {RiLockPasswordLine} from 'react-icons/ri'
@@ -34,9 +34,6 @@ const initialValues = {
 }
 
 const Login = ({values, touched, errors, user, handleSubmit, handleBlur, handleChange}) => {
-    // console.log('errors:', values);
-    // console.log('call login api', callLoginApi);
-    // console.log('onSubmit', onSubmit)
     if(user) {
         return (
             <Navigate to='/'></Navigate>
@@ -44,12 +41,6 @@ const Login = ({values, touched, errors, user, handleSubmit, handleBlur, handleC
     }
   return (
     <div className='bg-primary-default h-screen flex justify-center items-center'>
-        {/* <Formik 
-        // initialValues={initialValues}
-        // onSubmit={callLoginApi}
-        //  validationSchema={schema}
-        //  validateOnMount={true} 
-          > */}
             <form 
             onSubmit={handleSubmit}
             className='w-[400px]'>
@@ -91,24 +82,11 @@ const Login = ({values, touched, errors, user, handleSubmit, handleBlur, handleC
             </div>
 
             <button type='submit'  className='bg-white w-full font-semibold text-primary-default p-2 '>Login</button>
-
             </form>
-              
-
-        {/* </Formik> */}
-
     </div>
   )
 }
-
-// const myHOC = withFormik({
-//     validationSchema: schema,
-//     initialValues: initialValues,
-//     onSubmit: callLoginApi
-// });
 const myHOC = withFormik({ validationSchema: schema, handleSubmit: callLoginApi, initialValues: initialValues});
-// console.log(myHOC);
-
 const EasyLogin = myHOC(Login);
 
 export default EasyLogin;
