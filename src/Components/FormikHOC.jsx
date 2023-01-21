@@ -6,10 +6,11 @@ const FormikHOC = (IncomingComponent) => {
    return function OutputComponent({ name, ...rest}) {
     const field = useField(name);
     const [ data, meta ] = field;
-    // console.log(name);
+    // console.log(field);
     const {  onChange, onBlur, value } = data;
     const { touched, error } = meta;
-    console.log(value);
+    console.log('value of ');
+    // console.log(value);
     let borderClass = "border-gray-300"
     if(error && touched) {
         borderClass = "border-primary-default"
