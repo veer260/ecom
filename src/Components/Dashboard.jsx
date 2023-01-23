@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Navigate } from 'react-router'
-import { userContext } from '../App'
+import { Link } from 'react-router-dom';
+import { userContext } from './Contexts'
 
 const Dashboard = () => {
   const {setUser} = useContext(userContext);
@@ -14,6 +15,16 @@ const Dashboard = () => {
         <button 
         onClick={handleLogout}
         className='bg-primary-default px-3 py-2 font-semibold text-white rounded-md shadow-md'>Logout</button>
+
+        <div>
+        <Link 
+        className='bg-primary-default px-3 py-2 font-semibold text-white rounded-md shadow-md'
+        to={'/products'}
+        >Direct to products</Link>
+
+        </div>
+         
+        
     </div>
   )
 }

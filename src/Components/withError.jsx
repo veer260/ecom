@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import { alertContext } from '../App'
+import { alertContext } from './Contexts'
 
 const withError = (IncomingComponent) => {
     
   return function OutgoingComponent(props) {
-    const {alert, setAlert, removeAlert} = useContext(alertContext);
+    const contextData = useContext(alertContext);
     return (
-        <IncomingComponent {...props} alert={alert} setAlert={setAlert} removeAlert={removeAlert} />
+        <IncomingComponent {...props} {...contextData} />
     )
   }
 }
