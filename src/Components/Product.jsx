@@ -11,13 +11,18 @@ const Product = () => {
   console.log("Product rerrun");
   const [productData, setProductData] = useState();
 
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState("default");
+  // const [query, setQuery] = useState("");
+  // const [sort, setSort] = useState("default");
   const [loading, setLoading] = useState(true);
   // const [pageNumber, setPageNumber] = useState(1);
 
-  const [searchParams] = useSearchParams();
-  let page = +searchParams.get("page");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  let params = Object.fromEntries([...searchParams]);
+  let { query, page, sort } = params;
+  // let page = +searchParams.get("page");
+  query = query || "";
+  sort = sort || "default";
   page = page || 1;
   console.log("page:", page);
   // setPageNumber(urlPage);
@@ -43,11 +48,11 @@ const Product = () => {
   }, [sort, page, query]);
 
   const handleQueryChange = (e) => {
-    setQuery(e.target.value);
+    setSearchParams({ ...params, query: e.target.value, page: 1 });
   };
 
   const handleSortChange = (e) => {
-    setSort(e.target.value);
+    setSearchParams({ ...params, sort: e.target.value });
   };
 
   if (loading) {
@@ -94,7 +99,7 @@ const Product = () => {
               : " bg-primary-ligh border-1")
           }
           key={pageNo}
-          to={"?page=" + pageNo}
+          to={"?" + new URLSearchParams({ ...params, page: pageNo })}
         >
           {pageNo}
         </Link>
