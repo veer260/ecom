@@ -72,7 +72,7 @@ function App() {
               }
             ></Route>
             <Route
-              index
+              path="/Home/"
               element={
                 <UserRoute>
                   <Dashboard />

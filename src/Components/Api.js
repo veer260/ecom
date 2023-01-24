@@ -1,7 +1,7 @@
 // import completeArr from '../dummydata'
 import axios from "axios";
 
-export function getProductList({ sortBy, query, pageNumber, sortType }) {
+export function getProductList({ sortBy, query, page, sortType }) {
   // console.log('getProductList() called');
   let params = {};
   if (sortBy) {
@@ -11,8 +11,8 @@ export function getProductList({ sortBy, query, pageNumber, sortType }) {
   if (query) {
     params.search = query;
   }
-  if (pageNumber) {
-    params.page = pageNumber;
+  if (page) {
+    params.page = page;
   }
   if (sortType) {
     params.sortType = sortType;

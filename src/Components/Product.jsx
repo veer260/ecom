@@ -1,18 +1,27 @@
-import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
-// import completeArr from "../dummydata";
+import Loading from "./Loading";
+import { useEffect, useState } from "react";
 import { getProductList } from "./Api";
 import { BiSearchAlt2 } from "react-icons/bi";
 import {} from "react-icons/bi";
-import Loading from "./Loading";
+import { range } from "lodash";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Product = () => {
+  console.log("Product rerrun");
   const [productData, setProductData] = useState();
 
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState("default");
   const [loading, setLoading] = useState(true);
-  const [pageNumber, setPageNumber] = useState(1);
+  // const [pageNumber, setPageNumber] = useState(1);
+
+  const [searchParams] = useSearchParams();
+  let page = +searchParams.get("page");
+  page = page || 1;
+  console.log("page:", page);
+  // setPageNumber(urlPage);
+  // console.log("page:", urlPage);
 
   useEffect(() => {
     let sortBy;
@@ -26,28 +35,12 @@ const Product = () => {
       sortBy = "price";
       sortType = "desc";
     }
-    const data = getProductList({ sortBy, query, pageNumber, sortType });
+    const data = getProductList({ sortBy, query, page, sortType });
     data.then((response) => {
       setProductData(response);
       setLoading(false);
     });
-  }, [sort, pageNumber, query]);
-
-  // let arr = productList.filter((item) => {
-  //     return item.title.toLowerCase().indexOf(query.toLowerCase()) == -1 ? false : true;
-  // })
-
-  // if(sort === 'price') {
-  //     arr.sort((x, y) => {
-  //         return x.price - y.price
-  //     })
-  // }
-
-  // if(sort === 'name') {
-  //     arr.sort((x, y) => {
-  //         return x.name < y.name ? -1 : 1
-  //     })
-  // }
+  }, [sort, page, query]);
 
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
@@ -92,6 +85,20 @@ const Product = () => {
           return <ProductItem {...item} key={item.id} />;
         })}
       </div>
+      {range(1, productData.meta.last_page + 1).map((pageNo) => (
+        <Link
+          className={
+            "px-2 py-1 m-2     border-white" +
+            (page == pageNo
+              ? " bg-primary-dark border-2 shadow-md text-white font-display text-xl"
+              : " bg-primary-ligh border-1")
+          }
+          key={pageNo}
+          to={"?page=" + pageNo}
+        >
+          {pageNo}
+        </Link>
+      ))}
     </div>
   );
 };
