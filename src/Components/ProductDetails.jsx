@@ -5,8 +5,9 @@ import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 import Loading from "./Loading";
 import { IoAddSharp } from "react-icons/io5";
 import { RiSubtractFill } from "react-icons/ri";
+import { withCart } from "./withProvider";
 
-const ProductDetails = ({ onAddtoKart }) => {
+const ProductDetails = ({ addtoKart }) => {
   const sku = +useParams().sku;
   const [product, setProduct] = useState({});
   const [count, setCount] = useState(1);
@@ -34,7 +35,7 @@ const ProductDetails = ({ onAddtoKart }) => {
   };
 
   const handleSubmitToCart = () => {
-    onAddtoKart(sku, count);
+    addtoKart(sku, count);
   };
 
   const handleCountChange = (e) => {
@@ -137,4 +138,4 @@ const ProductDetails = ({ onAddtoKart }) => {
   );
 };
 
-export default ProductDetails;
+export default withCart(ProductDetails);

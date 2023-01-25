@@ -10,23 +10,15 @@ import { Link, useSearchParams } from "react-router-dom";
 const Product = () => {
   console.log("Product rerrun");
   const [productData, setProductData] = useState();
-
-  // const [query, setQuery] = useState("");
-  // const [sort, setSort] = useState("default");
   const [loading, setLoading] = useState(true);
-  // const [pageNumber, setPageNumber] = useState(1);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   let params = Object.fromEntries([...searchParams]);
   let { query, page, sort } = params;
-  // let page = +searchParams.get("page");
   query = query || "";
   sort = sort || "default";
   page = page || 1;
   console.log("page:", page);
-  // setPageNumber(urlPage);
-  // console.log("page:", urlPage);
 
   useEffect(() => {
     let sortBy;

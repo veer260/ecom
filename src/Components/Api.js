@@ -2,10 +2,8 @@
 import axios from "axios";
 
 export function getProductList({ sortBy, query, page, sortType }) {
-  // console.log('getProductList() called');
   let params = {};
   if (sortBy) {
-    // console.log("sort", sort);
     params.sortBy = sortBy;
   }
   if (query) {
@@ -25,18 +23,27 @@ export function getProductList({ sortBy, query, page, sortType }) {
     .then((response) => {
       return response.data;
     });
-  // data.then((response) => {
-  //     console.log('promise func');
-  //     return response.data.products;
-  // })
-
-  // data.then((response) => {
-  //     console.log(response.data.products);
-  // })
 }
 
 export function getProduct(id) {
-  return axios.get("https://dummyjson.com/products/" + id).then((response) => {
-    return response.data;
-  });
+  return axios
+    .get("https://myeasykart.codeyogi.io/product/" + id)
+    .then((response) => {
+      return response.data;
+    });
+}
+
+export function getProductsByIds(Ids) {
+  let commaSeperatedIds = Ids.join();
+  console.log("Comma seperated:", commaSeperatedIds);
+  return axios
+    .get("https://myeasykart.codeyogi.io/products/bulk", {
+      params: {
+        ids: commaSeperatedIds,
+      },
+    })
+    .then((response) => {
+      console.log("response:", response);
+      return response.data;
+    });
 }

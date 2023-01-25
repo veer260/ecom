@@ -1,39 +1,40 @@
-import React, { useState } from 'react'
-import CartItem from './CartItem'
-import Coupon from './Coupon';
+import React, { useState } from "react";
+import CartItem from "./CartItem";
+import Coupon from "./Coupon";
+import { withCart } from "./withProvider";
 
-const CartList = ({cart, updateCart, setLocalStorage, products}) => {
-    // const [localCart, setLocalCart ] = useState(cart);
-    // const onUpdate = () => {
-    //     updateEveryCart(localCart);
-    // }
-    
-    const updateCartObject = () => {
-        updateCart(localCart);
-    }
+const CartList = ({ cart, setCart, addtoKart, updateCart, products }) => {
+  const [localCart, setLocalCart] = useState(cart);
 
-    const handleRemove = (event, id ) => {
-        console.log(event.currentTarget);
-        // console.log('ProductId', id );
-        const newCart = {...cart};
-        delete newCart[id];
-        // console.log('newCart',newCart);
-        updateCart(newCart);
-        setLocalStorage(newCart);
-     }
+  const handleUpdate = () => {
+    console.log("handleUpdate called");
+    updateCart(localCart);
+  };
+
+  const handleRemove = (event, id) => {
+    const newCart = { ...cart };
+    delete newCart[id];
+    updateCart(newCart);
+  };
   return (
     <div>
-        {
-            products.map(item => {
-               return (
-                  <CartItem  cart={cart} item={item}  onRemove={handleRemove} updateCart={updateCart} />
-               )
-            })
-            // Object.keys()
-         }
-         <Coupon onUpdate={updateCartObject} />
+      {products.map((item) => {
+        return (
+          <CartItem
+            //   key={item.id}
+            localCart={localCart}
+            setLocalCart={setLocalCart}
+            item={item}
+            onRemove={handleRemove}
+          />
+        );
+      })}
+      <Coupon
+        // onUpdate={updateCartObject}
+        onUpdate={handleUpdate}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default CartList;
+export default withCart(CartList);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { userContext } from "./Contexts";
-import Loading from "./Loading";
+import { userContext } from "../Components/Contexts";
+import Loading from "../Components/Loading";
 import axios from "axios";
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
