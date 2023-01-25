@@ -1,6 +1,8 @@
 import React from "react";
+import { withCart } from "./withProvider";
 
-const Coupon = ({ onUpdate }) => {
+const Coupon = ({ onUpdate, localCart, cart }) => {
+  let buttonattribute = localCart === cart ? { disabled: true } : {};
   return (
     <div className="flex py-2 px-4 w-[80%] mx-auto border-2 border-t-0 justify-between">
       <div className="flex gap-x-4">
@@ -14,8 +16,11 @@ const Coupon = ({ onUpdate }) => {
         </button>
       </div>
       <button
+        {...buttonattribute}
         onClick={onUpdate}
-        className="bg-primary-default px-8 py-1 rounded-md text-white uppercase font-semibold"
+        className={
+          "bg-primary-default px-8 py-1 rounded-md text-white uppercase font-semibold disabled:opacity-30"
+        }
       >
         update cart
       </button>
@@ -23,4 +28,4 @@ const Coupon = ({ onUpdate }) => {
   );
 };
 
-export default Coupon;
+export default withCart(Coupon);

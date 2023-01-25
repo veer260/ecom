@@ -5,13 +5,12 @@ import { withCart } from "./withProvider";
 
 const CartList = ({ cart, setCart, addtoKart, updateCart, products }) => {
   const [localCart, setLocalCart] = useState(cart);
-
   const handleUpdate = () => {
     console.log("handleUpdate called");
     updateCart(localCart);
   };
 
-  const handleRemove = (event, id) => {
+  const handleRemove = (id) => {
     const newCart = { ...cart };
     delete newCart[id];
     updateCart(newCart);
@@ -21,7 +20,7 @@ const CartList = ({ cart, setCart, addtoKart, updateCart, products }) => {
       {products.map((item) => {
         return (
           <CartItem
-            //   key={item.id}
+            key={item.id}
             localCart={localCart}
             setLocalCart={setLocalCart}
             item={item}
@@ -29,10 +28,7 @@ const CartList = ({ cart, setCart, addtoKart, updateCart, products }) => {
           />
         );
       })}
-      <Coupon
-        // onUpdate={updateCartObject}
-        onUpdate={handleUpdate}
-      />
+      <Coupon onUpdate={handleUpdate} localCart={localCart} />
     </div>
   );
 };

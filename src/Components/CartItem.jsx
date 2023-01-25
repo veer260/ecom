@@ -12,8 +12,8 @@ const CartItem = ({
   localCart,
   setLocalCart,
 }) => {
-  const handleRemove = (event) => {
-    onRemove(event, item.id);
+  const handleRemove = () => {
+    onRemove(item.id);
   };
 
   const handleChange = (event) => {
