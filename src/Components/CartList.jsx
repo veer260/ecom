@@ -1,26 +1,33 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import CartItem from "./CartItem";
 import Coupon from "./Coupon";
 import { withCart } from "./withProvider";
 
-const CartList = ({ cart, setCart, addtoKart, updateCart, products }) => {
-  const [localCart, setLocalCart] = useState(cart);
+const CartList = ({ cart, updateCart, quantityMap }) => {
+  const [localCart, setLocalCart] = useState({});
+  console.log("cartList start");
+
+  useEffect(() => {
+    console.log("useEffect start");
+    setLocalCart(quantityMap);
+  }, [cart]);
+
   const handleUpdate = () => {
-    console.log("handleUpdate called");
     updateCart(localCart);
   };
 
   const handleRemove = (id) => {
-    const newCart = { ...cart };
+    const newCart = { ...localCart };
     delete newCart[id];
     updateCart(newCart);
   };
   return (
     <div>
-      {products.map((item) => {
+      {cart.map((item) => {
         return (
           <CartItem
-            key={item.id}
+            key={item.product.id}
             localCart={localCart}
             setLocalCart={setLocalCart}
             item={item}
@@ -28,7 +35,11 @@ const CartList = ({ cart, setCart, addtoKart, updateCart, products }) => {
           />
         );
       })}
-      <Coupon onUpdate={handleUpdate} localCart={localCart} />
+      <Coupon
+        onUpdate={handleUpdate}
+        localCart={localCart}
+        quantityMap={quantityMap}
+      />
     </div>
   );
 };

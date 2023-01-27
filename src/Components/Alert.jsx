@@ -10,7 +10,7 @@ const Alert = ({ alert, setAlert, removeAlert }) => {
   console.log("alert", alert);
   useEffect(() => {
     if (alert) {
-      const timeout = setTimeout(removeAlert, 6 * 1000);
+      const timeout = setTimeout(removeAlert, 3 * 1000);
       return function () {
         clearTimeout(timeout);
       };

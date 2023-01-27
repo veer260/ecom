@@ -1,31 +1,60 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
+import { getCart, getProductsByIds, saveCart } from "../Components/Api";
 import { CartContext } from "../Components/Contexts";
+import { withUser } from "../Components/withProvider";
 
-const CartProvider = ({ children }) => {
-  const data = JSON.parse(localStorage.getItem("cartData")) || {};
-  const [cart, setCart] = useState(data);
+const CartProvider = ({ children, isLoggedIn }) => {
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    if (isLoggedIn) {
+      // console.log("cart:", typeof cart);
+      // console.log(getCart);
+      getCart().then((response) => {
+        setCart(response);
+        // console.log("saved Data:", response);
+      });
+    } else {
+      const savedData = JSON.parse(localStorage.getItem("cartData")) || {};
+      quantityMapToCart(savedData);
+      // console.log(savedData);
+    }
+  }, [isLoggedIn]);
 
-  const addtoKart = (itemId, itemCount) => {
-    let newItems = +itemCount;
-    let oldItems = cart[itemId] || 0;
-    const newCart = { ...cart };
-    newCart[itemId] = oldItems + newItems;
-    // setCart()
-    // localStorage.setItem("cartData", JSON.stringify(newCart));
+  const quantityMapToCart = (quantityMap) => {
+    getProductsByIds(Object.keys(quantityMap)).then((products) => {
+      const savedCart = products.map((p) => {
+        return {
+          product: p,
+          quantity: quantityMap[p.id],
+        };
+      });
+      setCart(savedCart);
+    });
+  };
+
+  const addtoKart = (productId, count) => {
+    const quantityMap = cart.reduce((output, current) => {
+      return { ...output, [current.product.id]: current.quantity };
+    }, {});
+    const oldCount = quantityMap[productId] || 0;
+    const newCart = { ...quantityMap, [productId]: count + oldCount };
     updateCart(newCart);
   };
 
-  const updateCart = (newCart) => {
-    setCart(newCart);
-    localStorage.setItem("cartData", JSON.stringify(newCart));
+  const updateCart = (quantityMap) => {
+    if (isLoggedIn) {
+      saveCart(quantityMap).then((response) => {
+        // console.log("data from saveCart:", response);
+        quantityMapToCart(quantityMap);
+      });
+    }
   };
 
-  const cartCount = Object.keys(cart).reduce((output, current) => {
-    console.log("inside total items");
-    return output + +cart[current];
+  const cartCount = cart.reduce((output, current) => {
+    return output + current.quantity;
   }, 0);
-
   return (
     <CartContext.Provider
       value={{ cart, setCart, updateCart, addtoKart, cartCount }}
@@ -35,4 +64,4 @@ const CartProvider = ({ children }) => {
   );
 };
 
-export default CartProvider;
+export default withUser(CartProvider);

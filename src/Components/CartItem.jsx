@@ -1,30 +1,17 @@
 import React, { useState } from "react";
 
 import { RxCrossCircled } from "react-icons/rx";
-import Coupon from "./Coupon";
 import { withCart } from "./withProvider";
 
-const CartItem = ({
-  cart,
-  item,
-  onRemove,
-  setCart,
-  localCart,
-  setLocalCart,
-}) => {
+const CartItem = ({ item, onRemove, localCart, setLocalCart }) => {
   const handleRemove = () => {
-    onRemove(item.id);
+    onRemove(item.product.id);
   };
 
   const handleChange = (event) => {
-    console.log(event.target.value);
     const newCart = { ...localCart };
-    newCart[item.id] = event.target.value;
+    newCart[item.product.id] = +event.target.value;
     setLocalCart(newCart);
-  };
-
-  const updateCartObject = () => {
-    setCart(localCart);
   };
 
   return (
@@ -36,14 +23,14 @@ const CartItem = ({
           </button>
 
           <div className="basis-1/3">
-            <img className="w-[50%] " src={item.thumbnail} alt="" />
+            <img className="w-[50%] " src={item.product.thumbnail} alt="" />
           </div>
 
           <p className="basis-1/3  text-sm font-bold text-primary-default">
-            {item.title}
+            {item.product.title}
           </p>
         </div>
-        <p className="basis-1/5 text-center ">${item.price}</p>
+        <p className="basis-1/5 text-center ">${item.product.price}</p>
         <div className="basis-1/5 flex justify-center">
           <input
             onChange={handleChange}
@@ -51,14 +38,14 @@ const CartItem = ({
             type="number"
             name=""
             id="quantity"
-            value={localCart[item.id]}
+            value={localCart[item.product.id]}
           />
           <label className="sr-only" htmlFor="quantity"></label>
           {/* <p className=' w-8 mx-auto text-center p-2 bg-white border'>{quantity}</p> */}
         </div>
 
         <p className="basis-1/5 text-center">
-          ${item.price * localCart[item.id]}
+          ${item.product.price * item.quantity}
         </p>
       </div>
     </>

@@ -35,7 +35,7 @@ export function getProduct(id) {
 
 export function getProductsByIds(Ids) {
   let commaSeperatedIds = Ids.join();
-  console.log("Comma seperated:", commaSeperatedIds);
+  // console.log("Comma seperated:", commaSeperatedIds);
   return axios
     .get("https://myeasykart.codeyogi.io/products/bulk", {
       params: {
@@ -43,7 +43,38 @@ export function getProductsByIds(Ids) {
       },
     })
     .then((response) => {
-      console.log("response:", response);
+      // console.log("response:", response);
+      return response.data;
+    });
+}
+
+export function getCart() {
+  return axios
+    .get("https://myeasykart.codeyogi.io/carts", {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      // console.log("response from getCart:", response);
+      return response.data;
+    });
+}
+
+export function saveCart(cart) {
+  return axios
+    .post(
+      "https://myeasykart.codeyogi.io/carts",
+      {
+        data: cart,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    )
+    .then((response) => {
       return response.data;
     });
 }

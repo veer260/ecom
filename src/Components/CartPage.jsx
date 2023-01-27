@@ -10,18 +10,21 @@ import CartList from "./CartList";
 import { withCart } from "./withProvider";
 
 const CartPage = ({ cart, setCart, addtoCart }) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [products, setProducts] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const quantityMap = cart.reduce((output, current) => {
+    return { ...output, [current.product.id]: current.quantity };
+  }, {});
 
-  useEffect(() => {
-    const productIds = Object.keys(cart);
-    console.log("cart:", cart);
-    getProductsByIds(productIds).then((response) => {
-      // console.log("response:", response);
-      setProducts(response);
-      setLoading(false);
-    });
-  }, [cart]);
+  // useEffect(() => {
+  //   const productIds = Object.keys(cart);
+  //   console.log("cart:", cart);
+  //   getProductsByIds(productIds).then((response) => {
+  //     // console.log("response:", response);
+  //     setProducts(response);
+  //     setLoading(false);
+  //   });
+  // }, [cart]);
 
   const handleRemove = (event, id) => {
     console.log(event.currentTarget);
@@ -31,18 +34,22 @@ const CartPage = ({ cart, setCart, addtoCart }) => {
     console.log("newCart", newCart);
     setCart(newCart);
     addtoCart(newCart);
+    // quantityMap = { quantityMap };
   };
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className="p-12">
       <div className="bg-white">
         <CartHeading />
-        <CartList products={products} />
-        <CartTotal cart={cart} products={products} />
+        <CartList quantityMap={quantityMap} />
+        <CartTotal
+        // cart={cart}
+        // products={products}
+        />
       </div>
     </div>
   );
