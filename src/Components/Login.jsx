@@ -4,6 +4,7 @@ import { Formik, Form, withFormik } from "formik";
 // import { TestFormikInput } from './TestInput';
 import TestInput from "./TestInput";
 import { BiUser } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import { RiLockPasswordLine } from "react-icons/ri";
 import axios from "axios";
 import { Navigate } from "react-router";
@@ -32,7 +33,7 @@ const callLoginApi = (values, bag, setAlert) => {
 };
 const schema = Yup.object().shape({
   email: Yup.string().required().email(),
-  password: Yup.string().required().min(8).max(12),
+  password: Yup.string().required().min(8),
 });
 
 const initialValues = {
@@ -96,6 +97,12 @@ const Login = ({
         >
           Login
         </button>
+        <div className="flex justify-between my-4 text-white font-formal">
+          <span>Don't have an accout</span>
+          <Link className="italic underline" to="/signup">
+            Sign Up
+          </Link>
+        </div>
       </form>
     </div>
   );

@@ -3,7 +3,7 @@ import React from 'react'
 import FormikHOC from './FormikHOC'
 
 const Input = ({id, name, label, borderClass, touched, error,...rest}) => {
-  console.log("input ran");
+  // console.log("input ran");
   // console.log(name);
   // const field = useField(name);
   // const [data, meta] = field;

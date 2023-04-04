@@ -4,6 +4,7 @@ import { Link, Route, Routes, useParams } from "react-router-dom";
 import ProductDetails from "./Components/ProductDetails";
 import Navbar from "./Components/Navbar";
 import CartPage from "./Components/CartPage";
+import SignUp from "./Components/SignUp";
 import { createContext, useEffect, useState } from "react";
 import EasyLogin from "./Components/Login";
 import Dashboard from "./Components/Dashboard";
@@ -38,6 +39,8 @@ function App() {
                   </AuthRoute>
                 }
               ></Route>
+              <Route path="/signup" element={<SignUp />}></Route>
+
               <Route
                 path="/ProductDetails/:sku/"
                 element={<ProductDetails />}
