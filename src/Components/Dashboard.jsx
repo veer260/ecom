@@ -7,6 +7,7 @@ const Dashboard = () => {
   const { setUser } = useContext(userContext);
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("cartData");
     setUser(undefined);
   };
   return (

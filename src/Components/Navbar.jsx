@@ -1,18 +1,24 @@
 import React from "react";
 
 import { FiShoppingCart } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { withCart } from "./withProvider";
 
-const handleShowCart = () => {
-  console.log("cart clicked");
-};
-
 const Navbar = ({ cartCount }) => {
+  const handleShowCart = () => {
+    console.log("cart clicked");
+  };
+
+  const handleClick = () => {
+    navigate("/");
+  };
+
+  const navigate = useNavigate();
   return (
     <div className=" p-4 px-16 w-full bg-white ">
       <div className="flex justify-between max-w-6xl bg-pink-200 py-2 mx-auto">
         <img
+          onClick={handleClick}
           className="w-28"
           src="https://logodownload.org/wp-content/uploads/2014/04/amazon-logo.png"
           alt=""
